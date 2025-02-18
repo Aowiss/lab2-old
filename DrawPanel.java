@@ -1,56 +1,59 @@
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+import java.util.List;
 import javax.swing.*;
 
-// This panel represents the animated part of the view with the car images.
+/**
+ * DrawPanel is responsible for rendering the cars on the screen.
+ * It dynamically supports multiple car types and updates their positions.
+ */
+public class DrawPanel extends JPanel {
+    private List<Car> cars; // List of cars to be drawn
+    private Image volvoImage;
+    private Image saabImage;
+    private Image scaniaImage;
 
-public class DrawPanel extends JPanel{
-
-    // Just a single image, TODO: Generalize
-    BufferedImage volvoImage;
-    // To keep track of a single car's position
-    Point volvoPoint = new Point();
-
-    BufferedImage volvoWorkshopImage;
-    Point volvoWorkshopPoint = new Point(300,300);
-
-    // TODO: Make this general for all cars
-    void moveit(int x, int y){
-        volvoPoint.x = x;
-        volvoPoint.y = y;
-    }
-
-    // Initializes the panel and reads the images
-    public DrawPanel(int x, int y) {
+    /**
+     * Constructor initializes the panel and loads car images.
+     * @param width Width of the panel.
+     * @param height Height of the panel.
+     * @param cars List of cars to be drawn.
+     */
+    public DrawPanel(int width, int height, List<Car> cars) {
         this.setDoubleBuffered(true);
-        this.setPreferredSize(new Dimension(x, y));
+        this.setPreferredSize(new Dimension(width, height));
         this.setBackground(Color.green);
-        // Print an error message in case file is not found with a try/catch block
-        try {
-            // You can remove the "pics" part if running outside of IntelliJ and
-            // everything is in the same main folder.
-            //volvoImage = ImageIO.read(new File(pic/"Volvo240.jpg"));
+        this.cars = cars;
 
-            // Rememember to rightclick src New -> Package -> name: pics -> MOVE *.jpg to pics.
-            // if you are starting in IntelliJ.
-            volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg"));
-            volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
-        } catch (IOException ex)
-        {
-            ex.printStackTrace();
-        }
-
+        // Load images for different car types
+        volvoImage = new ImageIcon("pics/Volvo240.jpg").getImage();
+        saabImage = new ImageIcon("pics/Saab95.jpg").getImage();
+        scaniaImage = new ImageIcon("pics/Scania.jpg").getImage();
     }
 
-    // This method is called each time the panel updates/refreshes/repaints itself
-    // TODO: Change to suit your needs.
+    /**
+     * Paints all cars on the panel at their respective positions.
+     * @param g Graphics object used for drawing.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(volvoImage, volvoPoint.x, volvoPoint.y, null); // see javadoc for more info on the parameters
-        g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
+        for (Car car : cars) {
+            Image carImage = getCarImage(car);
+            if (carImage != null) {
+                g.drawImage(carImage, (int) car.getX(), (int) car.getY(), null);
+            }
+        }
+    }
+
+    /**
+     * Returns the correct image for the given car type.
+     * @param car The car whose image is needed.
+     * @return The corresponding Image object, or null if no match is found.
+     */
+    private Image getCarImage(Car car) {
+        if (car instanceof Volvo240) return volvoImage;
+        if (car instanceof Saab95) return saabImage;
+        if (car instanceof Scania) return scaniaImage;
+        return null;
     }
 }
