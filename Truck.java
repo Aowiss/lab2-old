@@ -13,68 +13,28 @@ public abstract class Truck implements Movable{
     private final double maxAngle = 70;
     private final double minAngle = 0;
     private double platformAngle = 0;
-
-
     private PlatformState platformState;
 
-    public PlatformState getPlatformState() {
-        return platformState;
-    }
 
-
-    public double getAngle(){
-
-        return platformAngle;
-    }
-
-
-    public double getMaxAngle(){
-        return maxAngle;
-    }
-
-    public double getMinAngle(){
-        return minAngle;
-    }
-    public void platformRaise(double amount){
-
-        if(isMoving()){
-            System.out.println("Cannot move platform if truck is moving!!");
-            currentSpeed = 0;
-        }
-        else if (platformAngle > maxAngle){
-            System.out.println("Cannot move past the angle limit");
-            platformAngle = maxAngle;
-        }
-
-        else platformAngle += amount;
-
+    Truck(int nrDoors,double enginePower, Color color, String modelName){
+        directions = Directions.North;
+        this.nrDoors = nrDoors;
+        this.enginePower = enginePower;
+        this.color = color;
+        this.modelName = modelName;
+        platformState = PlatformState.DOWN;
+        platformAngle = 0;
     }
 
 
 
-    public void platformLower(double amount){
-        if(isMoving()){
-            System.out.println("Cannot move platform if truck is moving!!");
-            currentSpeed = 0;
-        }
-        else if (platformAngle < minAngle){
-            System.out.println("Cannot move past the angle limit");
-            platformAngle = minAngle;
-        }
-        else platformAngle -= amount;
-    }
 
 
 
-    public void Platformcheck(){
-        if(platformAngle > minAngle){
-            platformState = PlatformState.UP;
-        }
-        else if (platformAngle == minAngle){
-            platformState = PlatformState.DOWN;
-        }
 
-    }
+
+
+
 
 
 
@@ -101,6 +61,7 @@ public abstract class Truck implements Movable{
     public double GetX(){
         return x;
     }
+
 
 
     private static final double LOAD_DISTANCE = 5;
@@ -132,14 +93,7 @@ public abstract class Truck implements Movable{
 
     private Directions directions;
 
-    Truck(int nrDoors,double enginePower, Color color, String modelName){
-        directions = Directions.North;
-        this.nrDoors = nrDoors;
-        this.enginePower = enginePower;
-        this.color = color;
-        this.modelName = modelName;
-        platformState = PlatformState.DOWN;
-    }
+
 
     public double getCurrentSpeed(){
 

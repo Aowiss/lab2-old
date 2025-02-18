@@ -7,7 +7,20 @@ public abstract class Car implements Movable {
     private double currentSpeed; // The current speed of the car
     private Color color; // Color of the car
     private String modelName;
+    private double x;
+    private double y;
+    public final static double trimFactor = 1.25;
+    private Directions directions;
 
+
+
+    Car(int nrDoors,double enginePower, Color color, String modelName){
+        directions = Directions.North;
+        this.nrDoors = nrDoors;
+        this.enginePower = enginePower;
+        this.color = color;
+        this.modelName = modelName;
+    }
 
     public void SetY(double y){
         this.y = y;
@@ -25,25 +38,7 @@ public abstract class Car implements Movable {
     }
 
 
-    private double x;
-    private double y;
-    public final static double trimFactor = 1.25;
 
-
-
-
-
-
-
-    private Directions directions;
-
-    Car(int nrDoors,double enginePower, Color color, String modelName){
-        directions = Directions.North;
-        this.nrDoors = nrDoors;
-        this.enginePower = enginePower;
-        this.color = color;
-        this.modelName = modelName;
-    }
 
     public double getCurrentSpeed(){
 
@@ -91,7 +86,6 @@ public abstract class Car implements Movable {
         currentSpeed = 0;
     }
 
-    // TODO fix this method according to lab pm
     public void gas(double amount){
 
        if (amount < 0|| amount > 1) {
@@ -100,11 +94,10 @@ public abstract class Car implements Movable {
         }
 
         incrementSpeed(amount);
-
+       move();
 
     }
 
-    // TODO fix this method according to lab pm
     public void brake(double amount){
         if(amount < 0 || amount > 1) {
             throw new IllegalArgumentException("amount is not in range");
