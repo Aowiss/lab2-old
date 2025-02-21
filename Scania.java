@@ -42,13 +42,19 @@ public class Scania extends Truck {
     }
 
     public void isPlatformraised(){
-        if (platform.getAngle() > 0 && currentSpeed > 0){
+        if (platform.getAngle() > 0 && getCurrentSpeed() > 0){
 
             System.out.println("Cannot drive with the platform raised!!");
-            currentSpeed = 0;
+            return;
         }
     }
-   ;
+
+    @Override
+    public double speedFactor() {
+        return  getEnginePower() * 0.01 * trimFactor;
+    }
+
+    ;
 
 
 }

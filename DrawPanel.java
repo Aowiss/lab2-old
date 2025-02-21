@@ -1,7 +1,8 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -9,19 +10,33 @@ import javax.swing.*;
 
 public class DrawPanel extends JPanel{
 
+    private Map<Vehicle, BufferedImage> carImages = new HashMap<>();
+
+    // Map to store car positions
+    private Map<Vehicle, Point> carPositions = new HashMap<>();
+
+    public void addCar(Vehicle car, BufferedImage image, int startX, int startY){
+
+        carImages.put(car, image);
+        carPositions.put(car, new Point(startX, startY));
+    }
     // Just a single image, TODO: Generalize
     BufferedImage volvoImage;
-    // To keep track of a single car's position
-    Point volvoPoint = new Point();
+    BufferedImage SaabImage;
+    BufferedImage ScaniaImage;
+
 
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint = new Point(300,300);
 
     // TODO: Make this general for all cars
-    void moveit(int x, int y){
-        volvoPoint.x = x;
-        volvoPoint.y = y;
+    void moveit(Vehicle car){
+        carPositions.put(car, new Point((int) car.GetX(), (int) car.GetY()));
+
     }
+
+
+
 
     // Initializes the panel and reads the images
     public DrawPanel(int x, int y) {
@@ -37,6 +52,8 @@ public class DrawPanel extends JPanel{
             // Rememember to rightclick src New -> Package -> name: pics -> MOVE *.jpg to pics.
             // if you are starting in IntelliJ.
             volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg"));
+            SaabImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg"));
+            ScaniaImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg"));
             volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
         } catch (IOException ex)
         {
@@ -50,7 +67,23 @@ public class DrawPanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(volvoImage, volvoPoint.x, volvoPoint.y, null); // see javadoc for more info on the parameters
+        for (var entry : carPositions.entrySet()) {
+            Vehicle vehicle = entry.getKey();
+            Point carPosition = entry.getValue();
+
+            BufferedImage image = null;
+            if (vehicle instanceof Volvo240) {
+                image = volvoImage;
+            } else if (vehicle instanceof Saab95) {
+                image = SaabImage;
+            }
+
+            else if (vehicle instanceof Scania){
+               image = ScaniaImage;
+            }
+
+            g.drawImage(image, carPosition.x, carPosition.y, null);
+        }
         g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
     }
 }

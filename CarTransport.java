@@ -7,17 +7,7 @@ public class CarTransport extends Truck {
 
 
 
-    public void setX(double x){
 
-        super.setX(x);
-
-        stayWithTransport();
-    }
-
-    public void setY(double y){
-        super.setY(y);
-        stayWithTransport();
-    }
 
     private final int maxCars = 5;
 
@@ -26,7 +16,7 @@ public class CarTransport extends Truck {
     public int GetCargosize(){
         return cargo.size();
     }
-    private ArrayDeque<Car> cargo = new ArrayDeque<>();
+    private ArrayDeque<Vehicle> cargo = new ArrayDeque<>();
     private final Platform platform;
     public CarTransport(){
 
@@ -35,6 +25,11 @@ public class CarTransport extends Truck {
         platform = new Platform();
 
 
+    }
+
+    @Override
+    public double speedFactor() {
+        return  getEnginePower() * 0.01 * trimFactor;
     }
 
     @Override
@@ -48,13 +43,13 @@ public class CarTransport extends Truck {
 
         if(isMoving()){
             System.out.print("cant move platform if truck is moving");
-            currentSpeed = 0;
+            return;
         }
     }
     public void stayWithTransport(){
 
 
-        for (Car cars : cargo) {
+        for (Vehicle cars : cargo) {
             cars.SetX(this.GetX());
             cars.SetY(this.GetY());
 
@@ -70,12 +65,12 @@ public class CarTransport extends Truck {
         if (Objects.requireNonNull(platform.getPlatformState()) == PlatformState.DOWN) if (isMoving()) {
             System.out.println("Can't move with ramp down");
 
-            currentSpeed = 0;
+            return;
 
         }
     }
 
-    boolean canLoad(Car car){
+    boolean canLoad(Vehicle car){
 
         boolean loadable = false;
         if( (Objects.requireNonNull(platform.getPlatformState()) == PlatformState.DOWN) && cargo.size() < maxCars && withinRadius(car)) {
@@ -84,7 +79,7 @@ public class CarTransport extends Truck {
 
         return loadable;
     }
-    public void loadCar(Car car){
+    public void loadCar(Vehicle car){
         if(canLoad(car)){
 
             cargo.add(car);
@@ -95,11 +90,11 @@ public class CarTransport extends Truck {
 
 
     }
-    public Car deLoadCar(Car car) {
+    public Vehicle deLoadCar(Vehicle car) {
 
         if (!cargo.isEmpty() && canLoad(car)) {
 
-            Car unloadedcar = cargo.remove();
+            Vehicle unloadedcar = cargo.remove();
 
             System.out.println(unloadedcar + " has been unloaded");
 

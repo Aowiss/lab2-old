@@ -1,10 +1,15 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarWorkshop <T extends Car> {
+public class CarWorkshop <T extends Vehicle> {
     public List<T> Cars = new ArrayList<>();
     private final int maxCars = 5;
 
+
+
+
+    private double x;
+    private double y;
     public void addCar(T car){
 
         if(Cars.size() < maxCars){
@@ -20,10 +25,27 @@ public class CarWorkshop <T extends Car> {
         }
     }
 
+    private final int LOAD_DISTANCE = 10;
+
+    boolean withinRadius(Vehicle car){
+
+        double distance = Math.sqrt(Math.pow(car.GetX() - x, 2)) + Math.sqrt(Math.pow(car.GetY() - y,2));
+        return distance <= LOAD_DISTANCE;
+
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
     public void removeCar(T car){
 
         if(!Cars.isEmpty()){
-            Car retrievedcar = Cars.removeFirst();
+            Vehicle retrievedcar = Cars.removeFirst();
             System.out.println(retrievedcar + "has been retrieved");
         }
 
