@@ -39,13 +39,7 @@ public class CarTransport extends Truck {
     }
 
 
-    public void platformraise(){
 
-        if(isMoving()){
-            System.out.print("cant move platform if truck is moving");
-            return;
-        }
-    }
     public void stayWithTransport(){
 
 

@@ -20,7 +20,7 @@ public abstract class Truck extends Vehicle{
     }
 
 
-    boolean withinRadius(Vehicle car){
+      boolean withinRadius(Vehicle car){
 
         double distance = Math.sqrt(Math.pow(car.GetX() - GetX(), 2)) + Math.sqrt(Math.pow(car.GetY() - GetY(),2));
         return distance <= LOAD_DISTANCE;

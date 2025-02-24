@@ -142,4 +142,14 @@ public class CarController {
             car.stopEngine();
         }
     }
+    void turnLeft(){
+        for(Vehicle car: cars){
+            car.turnLeft();
+        }
+    }
+    void turnRight(){
+        for(Vehicle car: cars){
+            car.turnRight();
+        }
+    }
 }
