@@ -54,6 +54,16 @@ public class Scania extends Truck {
         return  getEnginePower() * 0.01 * trimFactor;
     }
 
+    @Override
+    public void gas(double amount){
+
+        if(platform.getPlatformState() == PlatformState.DOWN){
+
+            super.gas(amount);
+        }
+
+
+    }
     ;
 
 

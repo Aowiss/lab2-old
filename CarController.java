@@ -13,52 +13,60 @@ public class CarController {
     // member fields:
 
     // The delay (ms) corresponds to 20 updates a sec (hz)
-    private static final int delay = 50;
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
-    private final Timer timer = new Timer(delay, new TimerListener());;
 
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
-    ArrayList<Vehicle> cars = new ArrayList<>();
-    CarWorkshop<Volvo240> vwc;
+
+  //  ArrayList<Vehicle> cars = new ArrayList<>();
+    CarWorkshop<Volvo240> vwc = new CarWorkshop<>();
+    Saab95 saab = new Saab95();
+
+    public void brake(int gasAmount) {
+        m.brake(gasAmount);
+    }
+    public void gas(int gasAmount) {
+        m.gas(gasAmount);
+    }
+    public void startEngine() {
+        m.startEngine();
+    }
+    public void stopEngine(){
+        m.stopEngine();
+    }
+    public void turboOn() {
+        m.turboOn();
+    }
+    public void turboOff() {
+        m.turboOff();
+    }
+    public void liftBed(int amount) {
+        m.liftBed(amount);
+    }
+    public void lowerBed(int amount) {
+        m.lowerBed(amount);
+    }
+    public void turnLeft() {
+        m.turnLeft();
+    }
+    public void turnRight(){
+        m.turnRight();
+    }
 
 
     //methods:
 
-    public static void main(String[] args) {
-        // Instance of this class
-        CarController cc = new CarController();
-
-         cc.cars.add(new Volvo240(){{
-             SetX(300);
-             SetY(100);
-         }});
-         cc.cars.add(new Saab95());
-         cc.cars.add(new Scania()  {{SetY(200);}});
-         cc.vwc = new CarWorkshop<>();
-         cc.vwc.setX(300);
-         cc.vwc.setY(300);
-
-
-        // Start a new view and send a reference of self
-        cc.frame = new CarView("CarSim 1.0", cc);
-
-
-
-        // Start the timer
-        cc.timer.start();
-    }
 
     /* Each step the TimerListener moves all the cars in the list and tells the
     * view to update its images. Change this method to your needs.
     * */
-    private class TimerListener implements ActionListener {
+    public class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             ArrayList<Vehicle> toRemove = new ArrayList<>();
 
-            for (Vehicle car : cars) {
+            for (Vehicle car : m.cars) {
                 car.move();
 
                 int x = (int) Math.round(car.GetX());
@@ -81,75 +89,16 @@ public class CarController {
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
             }
-            cars.removeAll(toRemove);
+            m.cars.removeAll(toRemove);
         }
     }
 
-    // Calls the gas method for each car once
-    void gas(int amount) {
-        double gas = ((double) amount) / 100;
-        for (Vehicle car : cars) {
-            car.gas(gas);
-        }
+    ActionListener getTimerListener() { return new TimerListener(); }
+
+    private Model m = new Model();
+    public Model getM(){
+        return m;
     }
 
 
-    void brake(int amount){
-        double brake = ((double) amount) /100;
-        for (Vehicle car : cars){
-            car.brake(brake);
-        }
-
-    }
-    void turboOn(){
-        for(Vehicle car: cars){
-            if (car instanceof Saab95){
-                ((Saab95) car).setTurboOn();
-            }
-        }
-    }
-    void turboOff(){
-        for(Vehicle car: cars){
-            if (car instanceof Saab95){
-                ((Saab95) car).setTurboOff();
-            }
-        }
-    }
-    void lowerBed(int amount){
-
-        for(Vehicle car: cars){
-            if(car instanceof Scania){
-                ((Scania) car).platformLower( amount);
-            }
-        }
-    }
-    void liftBed(int amount){
-        for(Vehicle car: cars){
-            if(car instanceof Scania){
-                ((Scania) car).platformRaise( amount);
-
-            }
-        }
-    }
-
-    void startEngine(){
-        for(Vehicle car: cars){
-            car.startEngine();
-        }
-    }
-    void stopEngine(){
-        for(Vehicle car: cars){
-            car.stopEngine();
-        }
-    }
-    void turnLeft(){
-        for(Vehicle car: cars){
-            car.turnLeft();
-        }
-    }
-    void turnRight(){
-        for(Vehicle car: cars){
-            car.turnRight();
-        }
-    }
 }

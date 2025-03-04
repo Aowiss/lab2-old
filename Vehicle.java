@@ -12,6 +12,9 @@ public abstract class Vehicle implements Movable {
     public final static double trimFactor = 1.25;
     private Directions directions;
 
+    public String getModelName(){
+        return modelName;
+    }
 
 
     Vehicle(int nrDoors, double enginePower, Color color, String modelName){

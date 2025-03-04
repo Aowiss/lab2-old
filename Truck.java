@@ -31,12 +31,24 @@ public abstract class Truck extends Vehicle{
     public boolean isMoving() {
         boolean movedetect = false;
 
-        if (getCurrentSpeed() > 0) {
+        if (getCurrentSpeed() > 0.0001 ) {
             movedetect = true;
 
         }
         return movedetect;
     }
 
+
+
+    @Override
+    public void gas(double amount){
+
+        if(platformState == PlatformState.DOWN){
+
+            super.gas(amount);
+        }
+
+
+    }
 
 }

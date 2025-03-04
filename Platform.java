@@ -18,6 +18,11 @@ public class Platform {
     }
 
 
+    Platform(){
+
+        this.platformState = PlatformState.DOWN;
+    }
+
     public double getMaxAngle(){
         return maxAngle;
     }
@@ -33,6 +38,7 @@ public class Platform {
         }
 
         else platformAngle += amount;
+        Platformcheck();
 
     }
     public void lower(double amount){
@@ -41,6 +47,8 @@ public class Platform {
             platformAngle = minAngle;
         }
         else platformAngle -=amount;
+
+        Platformcheck();
     }
 
     public void Platformcheck(){
