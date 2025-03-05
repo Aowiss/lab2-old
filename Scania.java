@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Scania extends Truck {
+public class Scania extends Truck implements MovablePlatform {
 
 
     private final Platform platform;
@@ -9,15 +9,16 @@ public class Scania extends Truck {
 
         return platform.getAngle();
     }
-    public Scania() {
-        super(3, 150, Color.white, "Scania");
+    public Scania(double x, double y) {
+        super(3, 150, Color.white, "Scania",x,y);
 
         isMoving();
         platform = new Platform();
 
     }
 
-    public void platformRaise(int amount){
+    @Override
+    public void Raise(double amount){
         if(isMoving()){
             System.out.println("cannot move platform if truck is moving");
 
@@ -25,11 +26,13 @@ public class Scania extends Truck {
         }
 
         platform.Raise(amount);
+        System.out.println("angle is " + getAngle());
 
     }
 
 
-    public void platformLower(int amount){
+    @Override
+    public void lower(double amount){
         if(isMoving()){
             System.out.println("cannot move platform if truck is moving");
 
@@ -38,7 +41,23 @@ public class Scania extends Truck {
 
 
         platform.lower(amount);
+        System.out.println("Angle is " + getAngle());
 
+    }
+
+    @Override
+    public double getMaxAngle() {
+        return 0;
+    }
+
+    @Override
+    public void Platformcheck() {
+
+    }
+
+    @Override
+    public double getMinAngle() {
+        return 0;
     }
 
     public void isPlatformraised(){

@@ -11,8 +11,8 @@ public abstract class Truck extends Vehicle{
     private static final double LOAD_DISTANCE = 5;
 
 
-    Truck(int nrDoors,double enginePower, Color color, String modelName){
-        super( nrDoors, enginePower, color,  modelName);
+    Truck(int nrDoors,double enginePower, Color color, String modelName, double x, double y){
+        super( nrDoors, enginePower, color,  modelName,x,y);
 
         platformState = PlatformState.DOWN;
         platformAngle = 0;

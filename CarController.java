@@ -11,18 +11,20 @@ import java.util.ArrayList;
 
 public class CarController {
     // member fields:
+    private final Model m;
 
+    public CarController(Model model) {
+        this.m = model;
+    }
     // The delay (ms) corresponds to 20 updates a sec (hz)
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
 
     // The frame that represents this instance View of the MVC pattern
-    CarView frame;
+    //CarView frame;
     // A list of cars, modify if needed
 
   //  ArrayList<Vehicle> cars = new ArrayList<>();
-    CarWorkshop<Volvo240> vwc = new CarWorkshop<>();
-    Saab95 saab = new Saab95();
 
     public void brake(int gasAmount) {
         m.brake(gasAmount);
@@ -53,51 +55,6 @@ public class CarController {
     }
     public void turnRight(){
         m.turnRight();
-    }
-
-
-    //methods:
-
-
-    /* Each step the TimerListener moves all the cars in the list and tells the
-    * view to update its images. Change this method to your needs.
-    * */
-    public class TimerListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            ArrayList<Vehicle> toRemove = new ArrayList<>();
-
-            for (Vehicle car : m.cars) {
-                car.move();
-
-                int x = (int) Math.round(car.GetX());
-                int y = (int) Math.round(car.GetY());
-                if(x > 500 || y > 500 || x < 0 || y < 0 ){
-                    car.turnLeft();
-                    car.turnLeft();
-                }
-
-                if (car instanceof Volvo240 && vwc.withinRadius(car)){
-                    vwc.addCar((Volvo240) car);
-                    toRemove.add(car);
-
-                    System.out.println("car taken");
-                }
-
-
-
-                frame.drawPanel.moveit(car);
-                // repaint() calls the paintComponent method of the panel
-                frame.drawPanel.repaint();
-            }
-            m.cars.removeAll(toRemove);
-        }
-    }
-
-    ActionListener getTimerListener() { return new TimerListener(); }
-
-    private Model m = new Model();
-    public Model getM(){
-        return m;
     }
 
 

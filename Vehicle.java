@@ -17,12 +17,14 @@ public abstract class Vehicle implements Movable {
     }
 
 
-    Vehicle(int nrDoors, double enginePower, Color color, String modelName){
+    Vehicle(int nrDoors, double enginePower, Color color, String modelName, double x, double y){
         directions = Directions.North;
         this.nrDoors = nrDoors;
         this.enginePower = enginePower;
         this.color = color;
         this.modelName = modelName;
+        this.x = x;
+        this.y = y;
     }
 
     public void SetY(double y){

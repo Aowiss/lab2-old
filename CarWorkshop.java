@@ -25,13 +25,12 @@ public class CarWorkshop <T extends Vehicle> {
         }
     }
 
-    private final int LOAD_DISTANCE = 10;
+    private final int LOAD_DISTANCE = 50;
 
     boolean withinRadius(Vehicle car){
-
-        double distance = Math.sqrt(Math.pow(car.GetX() - x, 2)) + Math.sqrt(Math.pow(car.GetY() - y,2));
+        double distance = Math.sqrt(Math.pow(x-car.GetX(), 2) + Math.pow(y-car.GetY(),2));
+        System.out.println(distance);
         return distance <= LOAD_DISTANCE;
-
     }
 
     public void setX(double x) {

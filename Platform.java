@@ -1,4 +1,4 @@
-public class Platform {
+public class Platform implements MovablePlatform{
 
     private final double maxAngle = 70;
     private final double minAngle = 0;
@@ -22,6 +22,8 @@ public class Platform {
 
         this.platformState = PlatformState.DOWN;
     }
+
+
 
     public double getMaxAngle(){
         return maxAngle;

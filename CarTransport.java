@@ -2,7 +2,7 @@ import java.awt.*;
 import java.util.ArrayDeque;
 import java.util.Objects;
 
-public class CarTransport extends Truck {
+public class CarTransport extends Truck implements MovablePlatform {
 
 
 
@@ -18,9 +18,9 @@ public class CarTransport extends Truck {
     }
     private ArrayDeque<Vehicle> cargo = new ArrayDeque<>();
     private final Platform platform;
-    public CarTransport(){
+    public CarTransport(double x, double y){
 
-        super(2, 300, Color.black, "CarTransport");
+        super(2, 300, Color.black, "CarTransport",0,0);
         canTransportmove();
         platform = new Platform();
 
@@ -99,7 +99,8 @@ public class CarTransport extends Truck {
     }
 
 
-    public void platformRaise() {
+    @Override
+    public void Raise(double amount) {
 
         if (isMoving()) {
 
@@ -114,5 +115,24 @@ public class CarTransport extends Truck {
 
 
 
+    @Override
+    public void lower(double amount) {
+
+    }
+
+    @Override
+    public double getMaxAngle() {
+        return 0;
+    }
+
+    @Override
+    public void Platformcheck() {
+
+    }
+
+    @Override
+    public double getMinAngle() {
+        return 0;
+    }
 }
 

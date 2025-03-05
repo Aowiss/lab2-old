@@ -1,30 +1,74 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Model {
-
-
     ArrayList<Vehicle> cars = new ArrayList<>();
-    ArrayList<CarWorkshop> workshops = new ArrayList<>();
+    CarWorkshop<Volvo240> workShop = new CarWorkshop<>();
+    ArrayList<ObserverListener> Listeners = new ArrayList<>();
 
-    private static final int delay = 50;
+    private final Timer timer;
+    private final int DELAY = 50;
+    CarFactory factory = new CarFactory();
 
-    private Timer timer;
 
-    public void start(ActionListener timerListener){
-        timer = new Timer(delay, timerListener);
-        timer.start();
+
+    private class Loop implements ActionListener {
+
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ArrayList<Vehicle> toRemove = new ArrayList<>();
+
+            for (Vehicle car : cars) {
+                car.move();
+
+                int x = (int) Math.round(car.GetX());
+                int y = (int) Math.round(car.GetY());
+                if(x > 500 || y > 500 || x < 0 || y < 0 ){
+                    car.turnLeft();
+                    car.turnLeft();
+                }
+
+
+
+                if(addToWorkshop(car)){
+                    toRemove.add(car);
+                }
+
+                notifyListeners(car);
+            }
+            cars.removeAll(toRemove);
+        }
+    }
+        public Model(){
+
+        workShop.setX(300);
+        workShop.setY(300);
+
+        cars.add(factory.createVolvo(200,300));
+
+        cars.add(factory.createSaab(0,200));
+        cars.add(factory.createScania(0,300));
+        timer = new Timer(DELAY, new Loop());
+
     }
 
+    public void addListener(ObserverListener listener){
+        Listeners.add(listener);
 
+    }
+    void start(){
+        timer.start();
+    }
     void gas(int amount) {
         double gas = ((double) amount) / 100;
         for (Vehicle car : cars) {
             car.gas(gas);
         }
     }
-
 
     void brake(int amount){
         double brake = ((double) amount) /100;
@@ -33,6 +77,16 @@ public class Model {
         }
 
     }
+
+    boolean addToWorkshop(Vehicle v) {
+         if (v instanceof Volvo240 && workShop.withinRadius(v)){
+             workShop.addCar((Volvo240) v);
+             return true;
+
+         }
+         return false;
+    }
+
     void turboOn(){
         for(Vehicle car: cars){
             if (car instanceof Saab95){
@@ -40,6 +94,7 @@ public class Model {
             }
         }
     }
+
     void turboOff(){
         for(Vehicle car: cars){
             if (car instanceof Saab95){
@@ -47,18 +102,19 @@ public class Model {
             }
         }
     }
-    void lowerBed(int amount){
 
+    void lowerBed(int amount){
         for(Vehicle car: cars){
             if(car instanceof Scania){
-                ((Scania) car).platformLower( amount);
+                ((Scania) car).lower( amount);
             }
         }
     }
+
     void liftBed(int amount){
         for(Vehicle car: cars){
             if(car instanceof Scania){
-                ((Scania) car).platformRaise( amount);
+                ((Scania) car).Raise( amount);
 
             }
         }
@@ -82,6 +138,11 @@ public class Model {
     void turnRight(){
         for(Vehicle car: cars){
             car.turnRight();
+        }
+    }
+    void notifyListeners(Vehicle car){
+        for(ObserverListener listener: Listeners){
+            listener.update(car);
         }
     }
 }
