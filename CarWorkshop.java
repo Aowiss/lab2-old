@@ -29,7 +29,6 @@ public class CarWorkshop <T extends Vehicle> {
 
     boolean withinRadius(Vehicle car){
         double distance = Math.sqrt(Math.pow(x-car.GetX(), 2) + Math.pow(y-car.GetY(),2));
-        System.out.println(distance);
         return distance <= LOAD_DISTANCE;
     }
 

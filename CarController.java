@@ -57,5 +57,11 @@ public class CarController {
         m.turnRight();
     }
 
+    public void addCar(){
+        m.addCar();
+    }
 
+    public void removeCar(){
+        m.removeCar();
+    }
 }

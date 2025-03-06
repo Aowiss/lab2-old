@@ -14,16 +14,17 @@ public class DrawPanel extends JPanel{
 
     private Map<String, BufferedImage> vehicleImages = new HashMap<>();
 
+public void removeVehicleImage(Vehicle car){
+    boolean modelRemains = true;
 
+    if (!modelRemains){
+        vehicleImages.remove(car.getModelName());
+    }
+}
     // Map to store car positions
     private Map<Vehicle, Point> carPositions = new HashMap<>();
 
-    /*public void addCar(Vehicle car, BufferedImage image, int startX, int startY){
 
-        carImages.put(car, image);
-        carPositions.put(car, new Point(startX, startY));
-    }
-     */
 
 
     BufferedImage volvoWorkshopImage;
@@ -51,7 +52,6 @@ public class DrawPanel extends JPanel{
            vehicleImages.put("Volvo240", ImageIO.read(Objects.requireNonNull(DrawPanel.class.getResourceAsStream("/pics/Volvo240.jpg"))));
            vehicleImages.put("Saab95", ImageIO.read(Objects.requireNonNull(DrawPanel.class.getResourceAsStream("/pics/Saab95.jpg"))));
            vehicleImages.put("Scania", ImageIO.read(Objects.requireNonNull(DrawPanel.class.getResourceAsStream("/pics/Scania.jpg"))));
-
             volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
 
         } catch (IOException ex)
@@ -72,13 +72,10 @@ public class DrawPanel extends JPanel{
             BufferedImage image = vehicleImages.get(vehicle.getModelName());
 
             if(image != null){
-
                 g.drawImage(image, carPosition.x, carPosition.y, null);
-
             }
 
         }
-
         g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
     }
 }

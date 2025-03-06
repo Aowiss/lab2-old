@@ -47,11 +47,12 @@ public class Scania extends Truck implements MovablePlatform {
 
     @Override
     public double getMaxAngle() {
-        return 0;
+        return 70;
     }
 
     @Override
     public void Platformcheck() {
+
 
     }
 

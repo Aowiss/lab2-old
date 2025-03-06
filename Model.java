@@ -3,15 +3,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Model {
     ArrayList<Vehicle> cars = new ArrayList<>();
     CarWorkshop<Volvo240> workShop = new CarWorkshop<>();
     ArrayList<ObserverListener> Listeners = new ArrayList<>();
-
+    CarFactory factory = new CarFactory();
     private final Timer timer;
     private final int DELAY = 50;
-    CarFactory factory = new CarFactory();
+
+
+    DrawPanel panel = new DrawPanel(500,500);
+
+
+
 
 
 
@@ -31,7 +37,6 @@ public class Model {
                     car.turnLeft();
                     car.turnLeft();
                 }
-
 
 
                 if(addToWorkshop(car)){
@@ -60,6 +65,31 @@ public class Model {
         Listeners.add(listener);
 
     }
+    void addCar(){
+        int maxCars = 10;
+
+        if(cars.size()>= maxCars){
+            System.out.println("Car limit reached");
+            return;
+        }
+           cars.add( factory.getRandom());
+
+
+    }
+
+
+    void removeCar(){
+
+        if(!cars.isEmpty()){
+            Vehicle removedCar = cars.removeLast();
+
+            panel.removeVehicleImage(removedCar);
+            panel.repaint();
+        }
+
+
+    }
+
     void start(){
         timer.start();
     }
@@ -94,6 +124,8 @@ public class Model {
             }
         }
     }
+
+
 
     void turboOff(){
         for(Vehicle car: cars){

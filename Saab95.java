@@ -4,8 +4,8 @@ import java.awt.*;
 
 public class Saab95 extends Car {
 
-    public boolean turboOn;
 
+    private TurboState turboState;
 
 
 
@@ -13,28 +13,30 @@ public class Saab95 extends Car {
     
     public Saab95(double x, double y)  {
         super( 2,125, Color.red, "Saab95",x,y);
-	    turboOn = false;
-        stopEngine();
 
+        this.turboState = new StateTurboOff();
 
     }
     
 
 
     public void setTurboOn(){
-	    turboOn = true;
+	    turboState.setTurboOn(this);
     }
 
     public void setTurboOff(){
-	    turboOn = false;
+        turboState.setTurboOff(this);
+
+    }
+    void setTurboState(TurboState state) {
+        this.turboState = state;
     }
 
 
     
     public double speedFactor(){
-        double turbo = 1;
-        if(turboOn) turbo = 1.3;
-        return getEnginePower() * 0.01 * turbo;
+
+        return getEnginePower() * 0.01 * turboState.getTurboMulti();
     }
 
 

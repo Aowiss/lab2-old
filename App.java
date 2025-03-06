@@ -4,7 +4,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class App {
-    static private final int DELAY = 50;
     static private final String FRAME_NAME = "CarSim 1.0";
     private final Model m;
     private final CarController c;

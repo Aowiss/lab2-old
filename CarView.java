@@ -27,6 +27,7 @@ public class CarView extends JFrame implements ObserverListener{
     JSpinner gasSpinner = new JSpinner();
     int gasAmount = 0;
 
+
     JLabel gasLabel = new JLabel("Amount of gas");
 
     JButton gasButton = new JButton("Gas");
@@ -40,6 +41,10 @@ public class CarView extends JFrame implements ObserverListener{
     JButton stopButton = new JButton("Stop all cars");
     JButton turnLeftButton = new JButton("Turn left");
     JButton turnRightButton = new JButton("Turn right");
+    JButton addCarButton = new JButton("Add Car");
+    JButton removeCarButton = new JButton("Remove Car");
+
+
 
 
     // Constructor
@@ -70,6 +75,7 @@ public class CarView extends JFrame implements ObserverListener{
             public void stateChanged(ChangeEvent e) {
                 gasAmount = (int) ((JSpinner)e.getSource()).getValue();
             }
+
         });
 
         gasPanel.setLayout(new BorderLayout());
@@ -88,6 +94,10 @@ public class CarView extends JFrame implements ObserverListener{
         controlPanel.add(lowerBedButton, 5);
         controlPanel.add(turnLeftButton, 6);
         controlPanel.add(turnRightButton, 7);
+        controlPanel.add(addCarButton, 8);
+
+        controlPanel.add(removeCarButton, 9);
+
 
 
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
@@ -114,6 +124,7 @@ public class CarView extends JFrame implements ObserverListener{
                 carC.gas(gasAmount);
             }
         });
+
 
         brakeButton.addActionListener(new ActionListener() {
             @Override
@@ -167,6 +178,21 @@ public class CarView extends JFrame implements ObserverListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 carC.turnRight();
+            }
+        });
+
+        addCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.addCar();
+            }
+        });
+
+
+        removeCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.removeCar();
             }
         });
 

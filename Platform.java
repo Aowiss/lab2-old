@@ -3,24 +3,33 @@ public class Platform implements MovablePlatform{
     private final double maxAngle = 70;
     private final double minAngle = 0;
     private double platformAngle = 0;
-    private PlatformState platformState;
+    private PlatState platformState;
 
 
 
-    public PlatformState getPlatformState() {
-        return platformState;
-    }
+
 
 
     public double getAngle(){
 
         return platformAngle;
     }
+    public void setAngle(double angle){
+        this.platformAngle = angle;
 
 
-    Platform(){
+    }
 
-        this.platformState = PlatformState.DOWN;
+    public void setState(PlatState newState){
+        this.platformState = newState;
+    }
+
+
+
+    public Platform(){
+
+
+        this.platformState = new DownState();
     }
 
 
@@ -55,11 +64,14 @@ public class Platform implements MovablePlatform{
 
     public void Platformcheck(){
         if(platformAngle > minAngle){
-            platformState = PlatformState.UP;
+            platformState = new UpState();
         }
         else if (platformAngle == minAngle){
-            platformState = PlatformState.DOWN;
+            platformState = new DownState();
+        }
         }
 
-    }
+
+
+
 }
